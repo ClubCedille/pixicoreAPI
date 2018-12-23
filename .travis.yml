@@ -1,5 +1,49 @@
 services:
 - docker
 
-script:
-  - docker build .
+jobs:
+  include:
+  - stage: docker build including unit test tests
+    script: docker build .
+
+  - stage: release - generate release tag
+    script:
+    - git config --local user.name "bot@cedille.club"
+    - git config --local user.email "bot@cedille.club"
+    - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+    - git tag $TRAVIS_TAG
+    on:
+      repo: mikefaille/pixicoreAPI
+      tags: true
+
+  - stage: release - login on docker hub
+    script: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+  - stage: release - create docker latest release
+    script:
+    - docker build -t mikefaille/pixiecoreapi:latest .
+    - docker push mikefaille/pixiecoreapi:latest
+    on:
+      repo: mikefaille/pixicoreAPI
+
+  - stage: release - create docker tagged release
+    script:
+    - docker tag mikefaille/pixiecoreapi:$TRAVIS_TAG  .
+    - docker push mikefaille/pixiecoreapi:$TRAVIS_TAG
+    on:
+      repo: mikefaille/pixicoreAPI
+
+  - stage: release - prepare github release
+    - docker run mikefaille/pixiecoreapi cat pixicoreAPI > pixicoreAPI
+    on:
+      repo: mikefaille/pixicoreAPI
+      tags: true
+
+deploy:
+  provider: releases
+  api_key:
+    secure: uGy363QwqFNn8Z5YDCnkoEr6Nzomk4B4YfTnzsancTOri8qxXjdtOnuComTRzLhfUXyGJ/DPuWqUoKLMJLL217W9ycd1EFZx7My0ihoKfWL1TL2nIZxD1GWp7DKrBCkhC7flg/qA1jVsugiefeCizXi7yn6KW4ReNdV2WBQybjevMy7tjsqPgGxgryg65njIxP6LctP1Ar/Tr13i15umMxs8ncEQOJSNIvob1TgU7P84+RobF+Z6kkCb+wlHCNF2sAJUmxgV9CTDAdEAnRoWXxQB6f0sOyCElX8hRsofBFfm7IACpYYeluQpUdJDVK+qWzNpfezni5AJI3GtLl+7dISg1TvDO15B//bQqj67K/XjVifJaqopC4hkqHqqPZF5a0UWE61sLRPh5CjH2aa9TlgnB4+OO9LaGXysT6yGImAaITrDKRYbDVgEiHa81lH/6RHZUSqDv26KbhsL9q37NMfGYPWFq9Bf49jJO7g8wpziuhRCilInaJncgr29+LU3ceflVlEIECw4aCpRYKotcK6vIwNsEytRviSkbLgbhla3cxoral2X3LRzsRGVRfnlCCERamFY2SMFIIWSLDRkwW++ft1LHtkFtqzrPD4iV7Id0+ajnot+/P5eJ3PkngYUmxq0SpXIMFCuFmhOYP0QPaY056V3ESu7a1T0lwf3T0w=
+  file: pixicoreAPI
+  on:
+    repo: mikefaille/pixicoreAPI
+    tags: true
