@@ -25,15 +25,14 @@ func InitConfig() (*ConfigFile, error) {
 	err := confFile.ReadYamlConfig()
 	switch err.(type) {
 	case nil:
-		break
+		return confFile, nil
 	case *os.PathError:
 		log.Warnln(err)
-		break
-	case error:
+		return confFile, nil
+	// for all unmanaged kind of errors
+	default:
 		return nil, err
 	}
-
-	return confFile, nil
 }
 
 //WriteConfig write the yaml config file
