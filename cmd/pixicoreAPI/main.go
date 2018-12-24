@@ -30,7 +30,10 @@ func main() {
 	// receive notifications of the specified signals.
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
-	myConfigFile := config.InitConfig()
+	myConfigFile, err := config.InitConfig()
+	if err != nil {
+		log.Fatalln(err)
+	}
 	controller := api.InitController(myConfigFile)
 
 	go func() {

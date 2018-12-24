@@ -17,28 +17,23 @@ type ConfigFile struct {
 }
 
 //InitConfig create config if it does not exist
-func InitConfig() *ConfigFile {
+func InitConfig() (*ConfigFile, error) {
 	filePath := "servers-config.yaml"
-	confFile := ConfigFile{Path: filePath, Servers: nil}
 
-	if _, err := os.Stat(filePath); os.IsNotExist(err) {
-		log.Warn(err)
-		f, err := os.Create(filePath)
-		if err != nil {
-			log.Errorln(err)
-
-		}
-
-		defer f.Close()
-		servers := make(server.Servers)
-		confFile := ConfigFile{Path: filePath, Servers: &servers}
-		return &confFile
-
-	} else {
-		confFile.ReadYamlConfig()
-		return &confFile
+	confFile := new(ConfigFile)
+	confFile.Path = filePath
+	err := confFile.ReadYamlConfig()
+	switch err.(type) {
+	case nil:
+		break
+	case *os.PathError:
+		log.Warnln(err)
+		break
+	case error:
+		return nil, err
 	}
 
+	return confFile, nil
 }
 
 //WriteConfig write the yaml config file
@@ -51,6 +46,7 @@ func (configFile *ConfigFile) WriteYamlConfig() {
 	}
 	filename, _ := filepath.Abs(configFile.Path)
 	yamlServers, err := yaml.Marshal(&configFile.Servers)
+
 	f, err := os.Create(filename)
 	if err != nil {
 		log.Errorln(err)
@@ -61,24 +57,36 @@ func (configFile *ConfigFile) WriteYamlConfig() {
 }
 
 //ReadConfig read the yaml config file
-func (configFile *ConfigFile) ReadYamlConfig() {
+func (configFile *ConfigFile) ReadYamlConfig() (error) {
 	filename, _ := filepath.Abs(configFile.Path)
+
 	yamlFile, err := ioutil.ReadFile(filename)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 
+	// If the config file are empty, make a new servers list
 	if len(yamlFile) == 0 {
-		log.Warningln("Configfile named ", filename, " are actually empty")
+		log.Infoln("Configfile named ", filename, " are actually empty. Init servers list in-memory")
+		emptyServers := make(server.Servers)
+		configFile.Servers = &emptyServers
 
+	//If the config file are not empty, do more checks to load his content
 	} else {
 
+		// Try to parse the config file as a server list
 		err = yaml.Unmarshal(yamlFile, &configFile.Servers)
 		if err != nil {
-			log.Errorln(err)
+			return err
+		}
+
+		// if the server list are nil in the config file, make a new list of servers
+		if  *configFile.Servers == nil {
+			emptyServers := make(server.Servers)
+			configFile.Servers = &emptyServers
 		}
 	}
-
+	return nil
 }
 
 //GetServers return config of the all the servers

@@ -26,7 +26,11 @@ func testHTTPResponse(t *testing.T, r *gin.Engine, req *http.Request, f func(w *
 }
 
 func TestGetServers(t *testing.T) {
-	myConfigFile := config.InitConfig()
+	myConfigFile, err := config.InitConfig()
+	if err != nil {
+		t.Errorf("Error from InitConfig come normally from a broken configFile. TODO : Test env. must be sandboxed. Then config must be mocked.")
+	}
+
 	controller := InitController(myConfigFile)
 	r := GetRouter(controller)
 
