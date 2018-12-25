@@ -57,26 +57,22 @@ func (configFile *ConfigFile) WriteYamlConfig() {
 
 //ReadConfig read the yaml config file
 func (configFile *ConfigFile) ReadYamlConfig() (error) {
-	// If the config does not exist
-	if _, err := os.Stat(configFile.Path); os.IsNotExist(err) {
-		log.Infoln("Configfile in does not exist . Init servers list in-memory")
-		emptyServers := make(server.Servers)
-		configFile.Servers = &emptyServers
-		//If the config file are not empty, do more checks to load his content
-	} else {
+
+	// Config file exist 
+	if _, err := os.Stat(configFile.Path); !os.IsNotExist(err) {
 
 		filename, _ := filepath.Abs(configFile.Path)
-
 		yamlFile, err := ioutil.ReadFile(filename)
 		if err != nil {
 			return err
 		}
-		//if cofig file is empty create and use servers in memory
+
+		// Config file is empty, create and use servers list in memory
 		if len(yamlFile) == 0 {
 			emptyServers := make(server.Servers)
 			configFile.Servers = &emptyServers
 		} else {
-			// Try to parse the config file as a server list
+			// Try to parse the Config file as a server list
 			err = yaml.Unmarshal(yamlFile, &configFile.Servers)
 			if err != nil {
 				log.Infoln("corrupted config file")
@@ -84,11 +80,18 @@ func (configFile *ConfigFile) ReadYamlConfig() (error) {
 			}
 
 		}
-		// if the server list are nil in the config file, make a new list of servers
+		// Server list are nil in config file, make a new list of servers
 		if *configFile.Servers == nil {
 			emptyServers := make(server.Servers)
 			configFile.Servers = &emptyServers
 		}
+
+	// Config file does not exist. Initing servers list in memory.
+	} else {
+
+		log.Infoln("Config file does not exist. Initing servers list in-memory.")
+		emptyServers := make(server.Servers)
+		configFile.Servers = &emptyServers
 	}
 	return nil
 }
