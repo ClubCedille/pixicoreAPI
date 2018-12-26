@@ -12,7 +12,7 @@ func InitController(confFile *config.ConfigFile) Controller {
 	return ctrl
 }
 
-//Cors cors for the api
+// Cors cors for the api
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Add("Access-Control-Allow-Origin", "*")

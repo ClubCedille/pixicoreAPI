@@ -26,7 +26,6 @@ func (ctrl *Controller) Getlocal(c *gin.Context) {
 func (ctrl *Controller) BootServer(c *gin.Context) {
 
 	servers, err := ctrl.currentConfig.GetServers()
-
 	if err != nil {
 		log.Warn(err)
 	}
@@ -79,7 +78,7 @@ func (ctrl *Controller) InstallAll(c *gin.Context) {
 	c.JSON(200, &servers)
 }
 
-//CollectServerInfo collect information about a server with ssh
+// CollectServerInfo collect information about a server with ssh
 func (ctrl *Controller) CollectServerInfo(c *gin.Context) *server.Server {
 
 	currentServer := (*ctrl.currentConfig.Servers)[c.Param("macAddress")]
@@ -128,7 +127,7 @@ func (ctrl *Controller) CollectServerInfo(c *gin.Context) *server.Server {
 
 }
 
-//GetServers return config of the all the servers
+// GetServers return config of the all the servers
 func (ctrl *Controller) GetServers(c *gin.Context) {
 	servers, err := ctrl.currentConfig.GetServers()
 

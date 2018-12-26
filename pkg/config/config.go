@@ -16,7 +16,7 @@ type ConfigFile struct {
 	Path    string
 }
 
-//InitConfig create config if it does not exist
+// InitConfig create config if it does not exist
 func InitConfig() (*ConfigFile, error) {
 	filePath := "servers-config.yaml"
 
@@ -29,15 +29,14 @@ func InitConfig() (*ConfigFile, error) {
 	case *os.PathError:
 		log.Warnln(err)
 		return confFile, nil
-	// for all unmanaged kind of errors
+	// For all unmanaged kind of errors
 	default:
 		return nil, err
 	}
 }
 
-//WriteConfig write the yaml config file
+// WriteConfig write the yaml config file
 func (configFile *ConfigFile) WriteYamlConfig() {
-
 	if _, err := os.Stat(configFile.Path); os.IsNotExist(err) {
 		f, err := os.Create(configFile.Path)
 		log.Fatalln(err)
@@ -55,10 +54,10 @@ func (configFile *ConfigFile) WriteYamlConfig() {
 	f.Close()
 }
 
-//ReadConfig read the yaml config file
-func (configFile *ConfigFile) ReadYamlConfig() (error) {
+// ReadConfig read the yaml config file
+func (configFile *ConfigFile) ReadYamlConfig() error {
 
-	// Config file exist 
+	// Config file exist
 	if _, err := os.Stat(configFile.Path); !os.IsNotExist(err) {
 
 		filename, _ := filepath.Abs(configFile.Path)
@@ -66,7 +65,6 @@ func (configFile *ConfigFile) ReadYamlConfig() (error) {
 		if err != nil {
 			return err
 		}
-
 		// Config file is empty, create and use servers list in memory
 		if len(yamlFile) == 0 {
 			emptyServers := make(server.Servers)
@@ -86,9 +84,8 @@ func (configFile *ConfigFile) ReadYamlConfig() (error) {
 			configFile.Servers = &emptyServers
 		}
 
-	// Config file does not exist. Initing servers list in memory.
 	} else {
-
+		// Config file does not exist. Initing servers list in memory.
 		log.Infoln("Config file does not exist. Initing servers list in-memory.")
 		emptyServers := make(server.Servers)
 		configFile.Servers = &emptyServers
@@ -96,7 +93,7 @@ func (configFile *ConfigFile) ReadYamlConfig() (error) {
 	return nil
 }
 
-//GetServers return config of the all the servers
+// GetServers return config of the all the servers
 func (configFile *ConfigFile) GetServers() (*server.Servers, error) {
 	log.Info(configFile)
 

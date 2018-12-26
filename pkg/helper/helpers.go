@@ -19,7 +19,6 @@ type PxeSpec struct {
 
 //// *************************** HELPER FUNCTIONS ****************************
 func PixicoreInit(IPAddress string) PxeSpec {
-
 	cmd := "coreos.autologin coreos.first_boot=1 coreos.config.url={{ URL \"file:///home/cedille/pxe-config.ign\" }}"
 	ip := "ip="
 	ip = strings.Join([]string{ip, IPAddress}, "")
@@ -36,7 +35,7 @@ func PixicoreInit(IPAddress string) PxeSpec {
 	return pxeSpec
 }
 
-//CollectPhysicalsIfaces Used to collect physicals interfaces by excluding virtuals interfaces from all interfaces
+// CollectPhysicalsIfaces Used to collect physicals interfaces by excluding virtuals interfaces from all interfaces
 func CollectPhysicalsIfaces() ([]*net.Interface, error) {
 	// Use system path containing all interfaces
 	// Since everything is a file on *Nix systems we can only use /sys to discover nic.
