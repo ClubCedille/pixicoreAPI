@@ -2,7 +2,7 @@
 
 # GOAL : error (go vet) and lint (gofmt) checks using golang vanilla install 
 
-# Inspired from :
+# Inspired by:
 # - https://golang.org/misc/git/pre-commit?m=text
 # - https://ngurajeka.com/post/using-pre-commit-on-golang-project/
 
