@@ -6,7 +6,13 @@
 
 - Git clone the repo into `$GOPATH/src/github.com/jalilbengoufa/`.
 
-- Enter the `pixicoreAPI` directory. Run `go get ./...` which will install every dependencies.
+- Enter the `pixicoreAPI` directory.
+
+- Install [Dep](https://golang.github.io/dep/docs/installation.html), a program that will manage Go dependencies.
+
+- Add `dep` to your PATH like this: `export PATH=$PATH:$GOPATH/bin`.
+
+- Now you can install all the package dependencies with `dep ensure`.
 
 - `go test ./... && go build ./cmd/pixicoreAPI && ./pixicoreAPI` will run the tests, build the program and run it.
 
