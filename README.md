@@ -1,12 +1,14 @@
 # pixicoreAPI
 
-
 ## How to run the API
-- Install go and [dep](https://github.com/golang/dep)
 
-- Install all the package dependencies with  `dep ensure` inside project directory
+- Install [Go](https://nats.io/documentation/tutorials/go-install/).
 
-- `go test ./... && go build ./cmd/pixicoreAPI && ./pixicoreAPI`
+- Git clone the repo into `$GOPATH/src/github.com/jalilbengoufa/`.
+
+- Enter the `pixicoreAPI` directory. Run `go get ./...` which will install every dependencies.
+
+- `go test ./... && go build ./cmd/pixicoreAPI && ./pixicoreAPI` will run the tests, build the program and run it.
 
 #### Using Docker
 
