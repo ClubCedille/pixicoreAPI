@@ -40,12 +40,15 @@ func CollectPhysicalsIfaces() ([]*net.Interface, error) {
 	// Use system path containing all interfaces
 	// Since everything is a file on *Nix systems we can only use /sys to discover nic.
 	basePath := "/sys/class/net"
-	var phyIfaceList []*net.Interface
-	files, err := ioutil.ReadDir(basePath)
 
+	files, err := ioutil.ReadDir(basePath)
 	if err != nil {
-		return phyIfaceList, err
+		return nil, err
 	}
+
+	// This variable will contain the return for this function
+	var phyIfaceList []*net.Interface
+
 	for _, file := range files {
 		ifacePath, err := os.Readlink(fmt.Sprint(basePath, "/", file.Name()))
 		if err != nil {
@@ -64,10 +67,8 @@ func CollectPhysicalsIfaces() ([]*net.Interface, error) {
 	return phyIfaceList, err
 }
 
+//GetServerInfo scan this info from server: Kernel version, CPU architecture, Hostname and CPU number
 func GetServerInfo() *goInfo.GoInfoObject {
-
 	gi := goInfo.GetInfo()
-	log.Infoln(gi.String())
-
 	return gi
 }

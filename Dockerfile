@@ -12,6 +12,6 @@ ADD https://github.com/golang/dep/releases/download/v0.5.0/dep-linux-amd64 /usr/
 RUN chmod +x /usr/bin/dep
 RUN dep ensure
 
-RUN go test ./... && go build ./cmd/pixicoreAPI
+RUN go test ./... && go build ./cmd/pixicoreAPI &&  go build ./cmd/getFacts
 
 CMD ./pixicoreAPI
