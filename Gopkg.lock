@@ -24,7 +24,7 @@
     ".",
     "binding",
     "json",
-    "render"
+    "render",
   ]
   pruneopts = "UT"
   revision = "b869fe1415e4b9eb52f247441830d502aece2d4d"
@@ -45,7 +45,7 @@
     "cmp",
     "cmp/internal/diff",
     "cmp/internal/function",
-    "cmp/internal/value"
+    "cmp/internal/value",
   ]
   pruneopts = "UT"
   revision = "3af367b6b30c263d47e8895973edcca9a49cf029"
@@ -58,6 +58,14 @@
   pruneopts = "UT"
   revision = "1624edc4454b8682399def8740d46db5e4362ba4"
   version = "v1.1.5"
+
+[[projects]]
+  branch = "master"
+  digest = "1:400e113a367b511b9b09ca642ee11d9885485a93838526d697033af334a2fdde"
+  name = "github.com/kballard/go-shellquote"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "95032a82bc518f77982ea72343cc1ade730072f0"
 
 [[projects]]
   digest = "1:0a69a1c0db3591fcefb47f115b224592c8dfa4368b7ba9fae509d5e16cdc95c8"
@@ -108,6 +116,14 @@
   version = "v1.2.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:9575c378407dd13217c6bbc8d285b7e912724bc4b4288595edceb7a6000ea779"
+  name = "github.com/tmc/scp"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "f7b48647feef3e30991f2ecc16b2b9a977d9a7c3"
+
+[[projects]]
   digest = "1:03aa6e485e528acb119fb32901cf99582c380225fc7d5a02758e08b180cb56c3"
   name = "github.com/ugorji/go"
   packages = ["codec"]
@@ -127,7 +143,7 @@
     "internal/subtle",
     "poly1305",
     "ssh",
-    "ssh/terminal"
+    "ssh/terminal",
   ]
   pruneopts = "UT"
   revision = "505ab145d0a99da450461ae2c1a9f6cd10d1f447"
@@ -138,7 +154,7 @@
   name = "golang.org/x/sys"
   packages = [
     "unix",
-    "windows"
+    "windows",
   ]
   pruneopts = "UT"
   revision = "dcdaa6325bcb8d3c07805583fe12153f08a41e2b"
@@ -168,7 +184,8 @@
     "github.com/google/go-cmp/cmp",
     "github.com/matishsiao/goInfo",
     "github.com/sirupsen/logrus",
-    "golang.org/x/crypto/ssh"
+    "github.com/tmc/scp",
+    "golang.org/x/crypto/ssh",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

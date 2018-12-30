@@ -95,8 +95,6 @@ func (configFile *ConfigFile) ReadYamlConfig() error {
 
 // GetServers return config of the all the servers
 func (configFile *ConfigFile) GetServers() (*server.Servers, error) {
-	log.Info(configFile)
-
 	if configFile.Servers == nil {
 		return configFile.Servers, new(server.NilServerListError)
 	}

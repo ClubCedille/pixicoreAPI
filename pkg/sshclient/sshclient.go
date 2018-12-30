@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"golang.org/x/crypto/ssh"
 	"io/ioutil"
+	"github.com/tmc/scp"
 )
 
 //SSHClient used for ssh client
@@ -65,4 +66,16 @@ func PublicKeyFile(file string) ssh.AuthMethod {
 		return nil
 	}
 	return ssh.PublicKeys(key)
+}
+
+//Copy permit copy localFile to remote path using active ssh session on SSHClient
+func (client SSHClient) Copy(sourceFilePath string, destinationFilePath string) error {
+	session, err := client.newSession()
+	if err != nil {
+		return err
+	}
+	defer session.Close()
+
+	err = scp.CopyPath(sourceFilePath, destinationFilePath, session)
+	return err
 }
