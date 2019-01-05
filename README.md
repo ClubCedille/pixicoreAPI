@@ -16,6 +16,28 @@
 
 - `go test ./... && go build ./cmd/pixicoreAPI && ./pixicoreAPI` will run the tests, build the program and run it.
 
+## Run with vagrant 
+
+- Run `dep ensure` and `go build ./cmd/pixicoreAPI`
+
+- Install Vagrant
+
+- Run the master vm with `vagrant up master`
+
+    - SSH into the master VM with `vagrant ssh master`
+
+    - Install pixiecore with `go get -v go.universe.tf/netboot/cmd/pixiecore`
+
+    - Run the pixiecore client with `sudo ~/go/bin/pixiecore api http://localhost:3000 --dhcp-no-bind `
+
+- In another terminal ssh into the master VM with `vagrant ssh master`
+
+    - Run the pixiecoreAPI with `/home/cedille/pixicoreAPI`
+
+- Start the child VM with `vagrant up child`
+
+    - now if you open the child vm with virtualbox you can see the boot with pxe
+
 #### Using Docker
 
 - `docker build -t pixicoreapi .`
@@ -48,8 +70,3 @@
 
 - Show information about all the registered servers.
 
-### TODO
-
-- Unit tests
-    - https://semaphoreci.com/community/tutorials/test-driven-development-of-go-web-applications-with-gin
-    - https://medium.com/@craigchilds94/testing-gin-json-responses-1f258ce3b0b1
