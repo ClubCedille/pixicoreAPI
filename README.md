@@ -18,25 +18,11 @@
 
 ## Run with vagrant 
 
-- Run `dep ensure` and `go build ./cmd/pixicoreAPI`
-
 - Install Vagrant
 
-- Run the master vm with `vagrant up master`
+- Run `vagrant up `
 
-    - SSH into the master VM with `vagrant ssh master`
-
-    - Install pixiecore with `go get -v go.universe.tf/netboot/cmd/pixiecore`
-
-    - Run the pixiecore client with `sudo ~/go/bin/pixiecore api http://localhost:3000 --dhcp-no-bind `
-
-- In another terminal ssh into the master VM with `vagrant ssh master`
-
-    - Run the pixiecoreAPI with `/home/cedille/pixicoreAPI`
-
-- Start the child VM with `vagrant up child`
-
-    - now if you open the child vm with virtualbox you can see the boot with pxe
+    - Open virtualbox manager
 
 #### Using Docker
 
