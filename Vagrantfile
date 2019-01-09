@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider :virtualbox do |vb|
     vb.linked_clone = true
     vb.memory = 256
-    vb.customize ['modifyvm', :id, '--hostonlyadapter1', "vboxnet3"]
+    vb.customize ['modifyvm', :id, '--hostonlyadapter1', "vboxnet1"]
     vb.customize ['modifyvm', :id, '--cableconnected2', 'on']
   end
 
