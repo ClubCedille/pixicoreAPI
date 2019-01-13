@@ -17,6 +17,6 @@ ADD https://github.com/golang/dep/releases/download/v0.5.0/dep-linux-amd64 /usr/
 RUN chmod +x /usr/bin/dep
 RUN dep ensure
 
-RUN go build ./cmd/pixicoreAPI &&  go build ./cmd/getFacts && go get go.universe.tf/netboot/cmd/pixiecore 
+RUN go test ./... && go build ./cmd/pixicoreAPI &&  go build ./cmd/getFacts && go get go.universe.tf/netboot/cmd/pixiecore 
 
 CMD ./pixicoreAPI & /app/bin/pixiecore api http://localhost:3000 --dhcp-no-bind 
