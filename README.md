@@ -22,7 +22,8 @@
 
 - Run `vagrant up `
 
-    - Open virtualbox manager
+    - Open virtualbox manager 
+    - changez le chiffre dans l'argument `vboxnet3` si il n'est pas disponible
 
 #### Using Docker
 

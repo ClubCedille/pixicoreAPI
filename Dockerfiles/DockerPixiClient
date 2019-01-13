@@ -1,6 +1,0 @@
-FROM golang:1.11
-
-env GOPATH /app
-
-RUN go get go.universe.tf/netboot/cmd/pixiecore
-CMD /app/bin/pixiecore api http://localhost:3000 --dhcp-no-bind

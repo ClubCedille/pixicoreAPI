@@ -85,7 +85,7 @@ func (ctrl *Controller) CollectServerInfo(currentServer *server.Server) {
 	sshConfig := ssh.ClientConfig{
 		User: "core",
 		Auth: []ssh.AuthMethod{
-			sshclient.PublicKeyFile("/home/cedille/.ssh/id_rsa"),
+			sshclient.PublicKeyFile("~/.ssh/id_rsa"),
 		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
