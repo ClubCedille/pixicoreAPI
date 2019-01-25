@@ -1,7 +1,4 @@
-
-
 Vagrant.configure("2") do |config|
-
   config.vm.box = "debian/stretch64"
 
   config.vm.provider :virtualbox do |vb|
@@ -28,14 +25,29 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define :child do |config|
-    config.vm.hostname = 'child'
-    ##config.vm.network "private_network", mac: '080027000021',ip: '10.1.1.2', auto_config: false
-    #config.vm.provision "shell", inline: "sudo ip link set dev eth1 up && sudo dhclient eth1"
+  #seveur 1 demarre autamtiquement par pxe sur coreos
+  config.vm.define :vboxNode1 do |config|
+    config.vm.hostname = 'vboxNode1'
     config.vm.provider :virtualbox do |vb, config|
       vb.memory = 2048
       vb.customize ['modifyvm', :id, '--nic1', "hostonly"]
       vb.customize ['modifyvm', :id, '--macaddress1', '080027000021']
+      vb.customize ['modifyvm', :id, '--natnet1', '10.0.2.0/24']
+      vb.customize ['modifyvm', :id, '--boot1', 'net']
+      vb.customize ['modifyvm', :id, '--biospxedebug', 'on']
+      vb.customize ['modifyvm', :id, '--nicbootprio2', '1']
+      vb.customize ['modifyvm', :id, "--nictype2", '82540EM']
+      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    end
+  end
+
+  #seveur 1 demarre par pxe sur coreos
+  config.vm.define :vboxNode2 do |config|
+    config.vm.hostname = 'vboxNode2'
+    config.vm.provider :virtualbox do |vb, config|
+      vb.memory = 2048
+      vb.customize ['modifyvm', :id, '--nic1', "hostonly"]
+      vb.customize ['modifyvm', :id, '--macaddress1', '080027000031']
       vb.customize ['modifyvm', :id, '--natnet1', '10.0.2.0/24']
       vb.customize ['modifyvm', :id, '--boot1', 'net']
       vb.customize ['modifyvm', :id, '--biospxedebug', 'on']
