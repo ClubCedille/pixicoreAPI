@@ -13,7 +13,7 @@ RUN key=$(cat /home/cedille/id_rsa.pub) && sed -i "s|__KEY-SSH__|$key|g" /home/c
 
 WORKDIR $WORKDIR
 
-COPY .  $WORKDIR
+COPY . $WORKDIR
 
 ADD https://github.com/golang/dep/releases/download/v0.5.0/dep-linux-amd64 /usr/bin/dep
 RUN chmod +x /usr/bin/dep

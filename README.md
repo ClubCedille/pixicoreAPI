@@ -16,14 +16,14 @@
 
 - `go test ./... && go build ./cmd/pixicoreAPI && ./pixicoreAPI` will run the tests, build the program and run it.
 
-## Run with vagrant 
+## Run with vagrant
 
 - Install Vagrant
 
-- Run `vagrant up ` or separately with (`vagrant up master `), (`vagrant up vboxNode1 `), (`vagrant up vboxNode2`).
+- Run `vagrant up` or separately with (`vagrant up master`), (`vagrant up vboxNode1`), (`vagrant up vboxNode2`).
 
-    - Open virtualbox manager 
-    - Change  the number in  the argument `vboxnet3` if the vboxnet is not available
+        - Open virtualbox manager
+        - Change  the number in  the argument `vboxnet3` if the vboxnet is not available
 
 #### Using Docker
 
@@ -41,19 +41,18 @@
 
 ## API Endpoints
 
-#### `GET v1/boot/:macAddress`
+### `GET v1/boot/:macAddress`
 
 - Used by pixicore to get PXE config and boot each server (each server have a IP address assigned).
 
-#### `GET v1/install/:macAddress`
+### `GET v1/install/:macAddress`
 
 - Gets information (cores, RAM, etc) from the server using its macAddress as ID and install coresOS.
 
-#### `GET v1/all`
+### `GET v1/all`
 
 - Gets information (cores, RAM, etc) from each the server using its macAddress as ID and install coresOS for each one.
 
-#### `GET v1/servers`
+### `GET v1/servers`
 
 - Show information about all the registered servers.
-

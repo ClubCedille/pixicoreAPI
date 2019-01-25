@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  #seveur 1 demarre autamtiquement par pxe sur coreos
+  # Serveur 1 démarre automatiquement par pxe sur coreos
   config.vm.define :vboxNode1 do |config|
     config.vm.hostname = 'vboxNode1'
     config.vm.provider :virtualbox do |vb, config|
@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  #seveur 1 demarre par pxe sur coreos
+  # Serveur 2 démarre automatiquement par pxe sur coreos
   config.vm.define :vboxNode2 do |config|
     config.vm.hostname = 'vboxNode2'
     config.vm.provider :virtualbox do |vb, config|
