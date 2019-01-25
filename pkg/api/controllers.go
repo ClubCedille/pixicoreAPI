@@ -110,12 +110,26 @@ func (ctrl *Controller) CollectServerInfo(currentServer *server.Server) {
 		log.Errorf("command run error: %s\n", err)
 	}
 
+	var machineId = ""
+	machineId, err = clientSSH.RunCommand("cat /var/lib/dbus/machine-id")
+	if err != nil {
+		// It failed, so try again with another path.
+		machineId, err = clientSSH.RunCommand("cat /etc/machine-id")
+
+		if err != nil {
+			log.Errorf("Failed to get the machine Id. Command run error: %s\n", err)
+		}
+	}
+
 	if currentServer.MacAddress.String() == strings.TrimSuffix(macAddressFirst, "\r\n") {
 		currentServer.SecondMacAddress = strings.TrimSuffix(macAddressSecond, "\r\n")
 	} else {
 		currentServer.SecondMacAddress = strings.TrimSuffix(macAddressFirst, "\r\n")
 	}
 	currentServer.Kernel = strings.TrimSuffix(kernel, "\r\n")
+
+	// Set machine id as the server's id. This is an unique identifier that will help differentiate the servers.
+	currentServer.Id = strings.TrimSuffix(machineId, "\r\n")
 
 	_, err = clientSSH.RunCommand("sudo coreos-install -d /dev/sda -i /run/ignition.json -C stable")
 	if err != nil {

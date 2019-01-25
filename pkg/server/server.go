@@ -14,6 +14,7 @@ type Servers map[string]*Server
 
 //Server represent a config of a server
 type Server struct {
+	Id               string           `yaml:"id"`
 	MacAddress       net.HardwareAddr `yaml:"macAddress"`
 	IPAddress        string           `yaml:"ipAddress"`
 	Installed        bool             `yaml:"installed"`
