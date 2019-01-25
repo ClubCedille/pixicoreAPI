@@ -37,7 +37,6 @@ Vagrant.configure("2") do |config|
       vb.customize ['modifyvm', :id, '--biospxedebug', 'on']
       vb.customize ['modifyvm', :id, '--nicbootprio2', '1']
       vb.customize ['modifyvm', :id, "--nictype2", '82540EM']
-      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
     end
   end
 
@@ -55,5 +54,5 @@ Vagrant.configure("2") do |config|
       vb.customize ['modifyvm', :id, "--nictype2", '82540EM']
     end
   end
-
+  
 end 

@@ -20,10 +20,10 @@
 
 - Install Vagrant
 
-- Run `vagrant up `
+- Run `vagrant up ` or separately with (`vagrant up master `), (`vagrant up vboxNode1 `), (`vagrant up vboxNode2`).
 
     - Open virtualbox manager 
-    - changez le chiffre dans l'argument `vboxnet3` si il n'est pas disponible
+    - Change  the number in  the argument `vboxnet3` if the vboxnet is not available
 
 #### Using Docker
 
