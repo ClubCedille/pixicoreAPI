@@ -10,6 +10,7 @@ RUN mkdir -p /dhcpd
 RUN apt-get update  -y
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py
 RUN pip install isc_dhcp_leases
+RUN apt-get install netcat -y
 RUN wget -nv https://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz -P /app/coreosPxeConfig/
 RUN wget -nv https://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz -P /app/coreosPxeConfig/
 

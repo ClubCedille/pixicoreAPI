@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/ClubCedille/pixicoreAPI/pkg/config"
+	"github.com/gin-gonic/gin"
 )
 
 //// *************************** Controllers ****************************
@@ -31,6 +31,7 @@ func GetRouter(controller Controller) *gin.Engine {
 		v1.GET("/single/:macAddress", controller.InstallServer)
 		v1.GET("/all/", controller.InstallAll)
 		v1.GET("/servers", controller.GetServers)
+		v1.GET("/update/:macAddress", controller.UpdateTest)
 	}
 	return r
 }
