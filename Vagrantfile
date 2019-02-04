@@ -5,17 +5,17 @@ Vagrant.configure("2") do |config|
     vb.linked_clone = true
     vb.memory = 256
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ['modifyvm', :id, '--hostonlyadapter1', "vboxnet0"]
+    vb.customize ['modifyvm', :id, '--hostonlyadapter1', "vboxnet5"]
     vb.customize ['modifyvm', :id, '--cableconnected2', 'on']
   end
 
   config.vm.define :master do |config|
     config.vm.hostname = 'master'
-    config.vm.network "private_network", mac: '080027000011', ip: '10.1.1.3', name: 'vboxnet0'
+    config.vm.network "private_network", mac: '080027000011', ip: '10.1.1.3', name: 'vboxnet5'
     config.vm.provision :shell, path: 'gateway.sh'
     config.vm.provision "docker" do |d|
       d.build_image "/vagrant/",  args:"-t pixicoreapi" 
-      d.run "pixicoreapi", args: "-d --network host"
+      d.run "pixicoreapi", args: "-d --network host -it --name pixicoreapi -v /var/lib/dhcp:/dhcpd"
     end
     config.vm.provider :virtualbox do |vb, config|
       vb.memory = 2048
