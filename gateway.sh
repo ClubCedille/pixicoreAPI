@@ -31,7 +31,10 @@ subnet 10.1.1.0 netmask 255.255.255.0 {
 }
 
 EOF
-sed -i -E 's,^(INTERFACESv4=).*,\1"eth1",' /etc/default/isc-dhcp-server
+
+export DHCP_LISTEN_IF=$(ip addr | grep -B 2 '10.1.1.3' | awk -F " " '/^[0-9]:/  {print $2}' | sed  's/://g')
+
+sed -i -E "s,^(INTERFACESv4=).*,\1${DHCP_LISTEN_IF}," /etc/default/isc-dhcp-server
 sed -i -E  's/^INTERFACESv6=/#&/' /etc/default/isc-dhcp-server
 cat>/usr/local/sbin/dhcp-event<<'EOF'
 #!/bin/bash
@@ -66,5 +69,3 @@ cat<<'EOF'>/etc/network/if-pre-up.d/iptables-restore
 iptables-restore </etc/iptables-rules-v4.conf
 EOF
 chmod +x /etc/network/if-pre-up.d/iptables-restore
-
-
