@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :master do |config|
-    config.vm.box = "debian/stretch64"
+    config.vm.box = "debian/jessie64"
     config.vm.hostname = 'master'
     config.vm.synced_folder ".", "/vagrant", type: "rsync",
                             rsync__exclude: ".git/"
@@ -29,19 +29,19 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision :shell, path: 'gateway.sh'
     config.vm.provider :libvirt do |libvirt|
-      libvirt.memory = 256
+      libvirt.memory = 2048
     end
 
     config.vm.provision "docker" do |d|
       d.build_image "/vagrant/",  args:"-t pixicoreapi"
-      d.run "pixicoreapi", args: "-d --network host"
+      #d.run "pixicoreapi", args: "-d --network host"
     end
 
   end
 
   # Serveur 1 démarre automatiquement par pxe sur coreos
-  config.vm.define :vboxNode1 do |config|
-    config.vm.hostname = 'vboxNode1'
+  config.vm.define :Node1 do |config|
+    config.vm.hostname = 'Node1'
     config.vm.network "private_network",
                       mac: '080027000011',
                       libvirt__network_name: "privatePixicore",
@@ -57,8 +57,8 @@ Vagrant.configure("2") do |config|
   end
 
   # Serveur 2 démarre automatiquement par pxe sur coreos
-  config.vm.define :vboxNode2 do |config|
-    config.vm.hostname = 'vboxNode1'
+  config.vm.define :Node2 do |config|
+    config.vm.hostname = 'Node2'
     config.vm.network "private_network",
                       mac: '080027000021',
                       libvirt__network_name: "privatePixicore",

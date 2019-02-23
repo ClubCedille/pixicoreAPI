@@ -9,45 +9,11 @@ apt-get upgrade -y
 
 # install vim.
 
-apt-get install -y --no-install-recommends vim
+#apt-get install -y --no-install-recommends vim
 
 # install git and curl
 
 sudo apt install -y  git curl
-
-# provision the DHCP server.
-# see http://www.syslinux.org/wiki/index.php?title=PXELINUX
-
-apt-get install -y --no-install-recommends isc-dhcp-server
-cat>/etc/dhcp/dhcpd.conf<<'EOF'
-
-default-lease-time 300;
-max-lease-time 300;
-option domain-name-servers 8.8.8.8, 8.8.4.4;
-option subnet-mask 255.255.255.0;
-option routers 10.1.1.3;
-subnet 10.1.1.0 netmask 255.255.255.0 {
-  range 10.1.1.100 10.1.1.254;
-}
-
-EOF
-
-export DHCP_LISTEN_IF=$(ip addr | grep -B 2 '10.1.1.3' | awk -F " " '/^[0-9]:/  {print $2}' | sed  's/://g')
-
-sed -i -E "s,^(INTERFACESv4=).*,\1${DHCP_LISTEN_IF}," /etc/default/isc-dhcp-server
-sed -i -E  's/^INTERFACESv6=/#&/' /etc/default/isc-dhcp-server
-cat>/usr/local/sbin/dhcp-event<<'EOF'
-#!/bin/bash
-# this is called when a lease changes state.
-# NB you can see these log entries with journalctl -t dhcp-event
-logger -t dhcp-event "argv: $*"
-for e in $(env); do
-  logger -t dhcp-event "env: $e"
-done
-EOF
-chmod +x /usr/local/sbin/dhcp-event
-systemctl restart isc-dhcp-server
-
 
 # setup NAT.
 # see https://help.ubuntu.com/community/IptablesHowTo
@@ -69,3 +35,8 @@ cat<<'EOF'>/etc/network/if-pre-up.d/iptables-restore
 iptables-restore </etc/iptables-rules-v4.conf
 EOF
 chmod +x /etc/network/if-pre-up.d/iptables-restore
+
+# install docker-compose
+
+sudo curl -s -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 
+sudo chmod +x /usr/local/bin/docker-compose

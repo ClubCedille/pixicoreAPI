@@ -2,10 +2,10 @@
 
 set -e
 
-export KEA_INTERFACE="wlp113s0"
-export KEA_POOL="192.168.1.100 - 192.168.1.225"
-export KEA_GATEWAY="192.168.1.1"
-export KEA_NETWORK="192.168.1.0/24"
+export KEA_INTERFACE="eth1"
+export KEA_POOL="10.1.1.100 - 10.1.1.254"
+export KEA_GATEWAY="10.1.1.1"
+export KEA_NETWORK="10.1.1.3/24"
 export KEA_CONFIG_TEMPLATE="kea-single-subnet.conf.tmpl"
 export KEA_DOCKER_IMAGE="clubcedille/kea:latest"
 

@@ -1,5 +1,19 @@
 # pixicoreAPI
 
+## Run test ENV with vagrant
+
+- Install Vagrant and KVM
+    - KVM manjaro https://www.fosslinux.com/2484/how-to-install-virtual-machine-manager-kvm-in-manjaro-and-arch-linux.htm
+
+- Install vagrant plugin vagrant-libvirt
+    - https://github.com/vagrant-libvirt/vagrant-libvirt
+
+- run `vagrant up master` 
+
+- ssh into the master with `vagrant ssh master` and  `docker-compose up -d` inside /vagrant/ dir
+
+- start each node with `vagrant up $nodename` ex: `vagrant up Node1`
+
 ## How to run the API
 
 - Install [Go](https://nats.io/documentation/tutorials/go-install/).
@@ -16,17 +30,6 @@
 
 - `go test ./... && go build ./cmd/pixicoreAPI && ./pixicoreAPI` will run the tests, build the program and run it.
 
-## Run with vagrant
-
-- Install Vagrant and VirtualBox
-
-- Create a hostonly adapter with VBoxManage with `VBoxManage hostonlyif create`
-
-- Copy the returned name and replaced in the Vagrantfile where `vboxnet0` is used;
-
-- Run `vagrant up` or separately with (`vagrant up master`), (`vagrant up vboxNode1`), (`vagrant up vboxNode2`).
-
-- ssh into the master with `vagrant ssh master`
 
 #### Using Docker
 
