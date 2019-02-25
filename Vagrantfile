@@ -26,8 +26,8 @@ Vagrant.configure("2") do |config|
                       libvirt__domain_name: "test.local",
                       libvirt__host_ip: "10.1.1.1",
                       :libvirt__dhcp_enabled => false
-
     config.vm.provision :shell, path: 'gateway.sh'
+    config.vm.provision :shell, path: "kea/launch_docker.sh"
     config.vm.provider :libvirt do |libvirt|
       libvirt.memory = 2048
     end
