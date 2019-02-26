@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  kea:
+    image: clubcedille/kea:latest
+    volumes:
+      - ./kea/kea-single-subnet.conf:/usr/local/etc/kea/kea-dhcp4.conf
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    restart: always
+
+  pixicoreapi:
+    image: clubcedille/pixiecoreapi:v1
+    volumes:
+      - /vagrant/pxe-config.ign:/app/coreosPxeConfig/pxe-config.ign
+    network_mode: host
+    restart: always
+
+volumes:
+  kea-db_data:
+
