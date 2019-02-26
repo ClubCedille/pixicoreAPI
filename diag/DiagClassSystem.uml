@@ -1,0 +1,38 @@
+@startuml
+
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+
+namespace main {
+main --> api.InitController
+main --> api.Controller
+main --> config.InitConfig
+
+}
+
+namespace server {
+
+
+}
+
+namespace api {
+Controller --> server.ServerList
+Controller --> config.ConfigFile
+Controller --> sshclient.SSHClient
+
+
+}
+
+
+namespace config {
+ConfigFile --> server.ServerList
+
+}
+
+
+namespace sshclient {
+
+}
+
+@enduml

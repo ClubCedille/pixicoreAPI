@@ -1,0 +1,21 @@
+digraph untitled {
+	size="16";
+	rankdir=TD
+
+	edge[fontsize="12" arrowhead=open]
+	start[shape=circle, label="", style=filled]
+	end[shape=doublecircle, label="", style=filled]
+	action1[shape=box,style=rounded, label="Boot a computer \n from PixicoreAPI"]
+	action2[shape=box,style=rounded, label="Install operating\n system"]
+	// action3[shape=box,style=rounded, label="action"]
+	if1[shape=diamond, label="Server isn't\n configured"]
+	if2[shape=diamond, label="Make sure Kubernetes\n is well configured\n on the node"]
+
+	start -> action1
+	action1 -> if1[headport=n]
+	if1 -> action2[label="True" tailport=w]
+	if1 -> if2[taillabel="False" labeldistance=2.5 tailport=e]
+	action2 -> if2[headport=w]
+	// action3 -> if2[headport=e]
+	if2 -> end[taillabel="A new Kubernetes \n node is well configured"]
+}
