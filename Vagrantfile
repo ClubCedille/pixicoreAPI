@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
                       libvirt__domain_name: "test.local",
                       libvirt__host_ip: "10.1.1.1",
                       :libvirt__dhcp_enabled => false
+    config.vm.provision "file", source: "path/to/publicKey/id_rsa.pub", destination: "/vagrant/id_rsa.pub"
     config.vm.provision :shell, path: 'gateway.sh'
     config.vm.provision :shell, path: "kea/launch_docker.sh"
     config.vm.provider :libvirt do |libvirt|
@@ -33,8 +34,6 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.provision "docker" do |d|
-      d.build_image "/vagrant/",  args:"-t pixicoreapi"
-      #d.run "pixicoreapi", args: "-d --network host"
     end
 
   end

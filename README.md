@@ -8,11 +8,15 @@
 - Install vagrant plugin vagrant-libvirt
     - https://github.com/vagrant-libvirt/vagrant-libvirt
 
-- run `vagrant up master` 
+- Change path to your public key in config.vm.provision "file".
+
+- run `vagrant up master`
 
 - ssh into the master with `vagrant ssh master` and  `docker-compose up -d` inside /vagrant/ dir
 
 - start each node with `vagrant up $nodename` ex: `vagrant up Node1`
+
+- ssh into nodes with `ssh -i path/to/private/key/id_rsa core@IPADDRESS`
 
 ## How to run the API
 

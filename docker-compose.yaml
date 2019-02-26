@@ -11,7 +11,9 @@ services:
     restart: always
 
   pixicoreapi:
-    image: pixicoreapi
+    image: clubcedille/pixiecoreapi:v1
+    volumes:
+      - /vagrant/pxe-config.ign:/app/coreosPxeConfig/pxe-config.ign
     network_mode: host
     restart: always
 

@@ -4,8 +4,8 @@ set -eux
 echo 'Defaults env_keep += "DEBIAN_FRONTEND"' >/etc/sudoers.d/env_keep_apt
 chmod 440 /etc/sudoers.d/env_keep_apt
 export DEBIAN_FRONTEND=noninteractive
-apt-get update
-apt-get upgrade -y
+#apt-get update
+#apt-get upgrade -y
 
 # install vim.
 
@@ -40,3 +40,7 @@ chmod +x /etc/network/if-pre-up.d/iptables-restore
 
 sudo curl -s -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 
 sudo chmod +x /usr/local/bin/docker-compose
+
+# add ssh public key to pxe config file
+
+key=$(cat /vagrant/id_rsa.pub) && sed -i "s|__KEY-SSH__|$key|g" /vagrant/pxe-config.ign

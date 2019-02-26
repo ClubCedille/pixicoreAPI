@@ -5,17 +5,15 @@ ENV WORKDIR  $GOPATH/src/github.com/ClubCedille/pixicoreAPI
 RUN mkdir -p $WORKDIR
 
 RUN mkdir -p /app/coreosPxeConfig/
-RUN mkdir -p /app/.ssh/
+
 
 RUN wget -nv https://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe_image.cpio.gz -P /app/coreosPxeConfig/
 RUN wget -nv https://stable.release.core-os.net/amd64-usr/current/coreos_production_pxe.vmlinuz -P /app/coreosPxeConfig/
 WORKDIR $WORKDIR
 
 COPY . $WORKDIR
-RUN mv $WORKDIR/pxe-config.ign  /app/coreosPxeConfig/
 
-RUN ssh-keygen -f /app/.ssh/id_rsa -t rsa -N ''
-RUN key=$(cat /app/.ssh/id_rsa.pub) && sed -i "s|__KEY-SSH__|$key|g" /app/coreosPxeConfig/pxe-config.ign
+
 
 ADD https://github.com/golang/dep/releases/download/v0.5.0/dep-linux-amd64 /usr/bin/dep
 RUN chmod +x /usr/bin/dep
